@@ -1,0 +1,31 @@
+#BadBlock Crontab
+MAILTO=""
+
+#Vidage de la mémoire vive en cache (5 minutes)
+*/5 * * * * echo 3 > /proc/sys/vm/drop_caches
+
+#Rechargement de haproxy
+#* * * * * /etc/init.d/haproxy reload
+
+#Mise à jour de l'heure via ntp (30 minutes)
+*/30 * * * * /usr/sbin/ntpdate ntp.ovh.net
+
+#Tâches forum
+#* * * * * php /home/web/forum/deferred.php > /dev/null 2>&1
+
+#Vide la file d'attente postfix
+#*/30 * * * * postsuper -d ALL deferred
+
+#Protection PortSpoof
+#00 0 * * * sh /appdata/portspoof.sh
+
+#Mise à jour des règles de SpamAssassin
+#0 0 * * * /usr/bin/sa-update
+#0 0 * * * service spamassassin restart
+
+#Sauvegarde
+#00 0 * * * /usr/sbin/backup-manager -c /etc/salvador/backup.conf
+
+#Certificat SSL
+#0 0 * * 0 sh /root/.acme.sh/acme.sh --renew -d badblock.fr --force --ecc
+#4 0 * * * "/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh" > /dev/null

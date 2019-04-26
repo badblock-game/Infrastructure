@@ -1,0 +1,21 @@
+#Configurations
+
+server {
+listen IP:80;
+server_name "";
+return 444;
+}
+
+server {
+
+listen IP:443 ssl http2;
+server_name "";
+return 444;
+}
+
+server {
+
+listen IP:443 ssl http2;
+server_name coucou.badblock.fr IP;
+return 444;
+}
